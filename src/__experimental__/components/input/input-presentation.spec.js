@@ -8,7 +8,6 @@ import InputPresentationStyle, {
 import baseTheme from "../../../style/themes/base";
 import sizes from "./input-sizes.style";
 import { assertStyleMatch } from "../../../__spec_helper__/test-utils";
-import OptionsHelper from "../../../utils/helpers/options-helper";
 import {
   InputContext,
   InputGroupContext,
@@ -31,7 +30,7 @@ describe("InputPresentation", () => {
 
   describe("style", () => {
     describe("sizes", () => {
-      OptionsHelper.sizesRestricted.forEach((size) => {
+      ["small", "medium", "large"].forEach((size) => {
         it(`has the right style for ${size}-sized inputs`, () => {
           assertStyleMatch(
             {

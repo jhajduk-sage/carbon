@@ -4,7 +4,6 @@ import { action } from "@storybook/addon-actions";
 import I18n from "i18n-js";
 import Decimal from "./decimal.component";
 import { getCommonTextboxProps } from "../textbox/textbox.stories";
-import OptionsHelper from "../../../utils/helpers/options-helper";
 import guid from "../../../utils/helpers/guid";
 
 export default {
@@ -33,11 +32,7 @@ const commonProps = () => {
     max: 15,
     step: 1,
   };
-  const align = select(
-    "align",
-    OptionsHelper.alignBinary,
-    Decimal.defaultProps.align
-  );
+  const align = select("align", ["right", "left"], Decimal.defaultProps.align);
   const precision = number(
     "precision",
     Decimal.defaultProps.precision,

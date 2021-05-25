@@ -1,10 +1,9 @@
 import * as React from "react";
 import { PaddingProps } from "styled-system";
-import * as OptionsHelper from "../../../utils/helpers/options-helper";
 
 export interface FlatTableHeaderProps extends PaddingProps {
   /** Content alignment */
-  align?: OptionsHelper.AlignFull;
+  align?: "left" | "center" | "right";
   children?: React.ReactNode | string;
   /** Number of columns that a header cell should span */
   colspan?: number | string;

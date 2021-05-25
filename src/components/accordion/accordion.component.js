@@ -8,7 +8,6 @@ import React, {
 import PropTypes from "prop-types";
 import propTypes from "@styled-system/prop-types";
 
-import OptionsHelper from "../../utils/helpers/options-helper";
 import createGuid from "../../utils/helpers/guid";
 import Events from "../../utils/helpers/events";
 import {
@@ -223,7 +222,7 @@ Accordion.propTypes = {
   /** Sets icon type - accepted values: 'chevron_down' (default), 'dropdown' */
   iconType: PropTypes.oneOf(["chevron_down", "dropdown"]),
   /** Sets icon alignment - accepted values: 'left', 'right' (default) */
-  iconAlign: PropTypes.oneOf(OptionsHelper.alignBinary),
+  iconAlign: PropTypes.oneOf(["left", "right"]),
   /** Callback fired when expansion state changes, onChange(event: object, isExpanded: boolean) */
   onChange: PropTypes.func,
   /** Sets accordion title */

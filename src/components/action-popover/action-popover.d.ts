@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MarginSpacingProps } from "../../utils/helpers/options-helper";
+import { MarginSpacingProps } from "style/styled-system-interfaces";
 import ActionPopoverDivider from "./action-popover-divider";
 import { ActionPopoverItemProps } from "./action-popover-item";
 

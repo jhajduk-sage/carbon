@@ -5,6 +5,7 @@ import tagComponent from "../../utils/helpers/tags";
 import StyledIcon from "./icon.style";
 import Tooltip from "../tooltip";
 import { filterStyledSystemMarginProps } from "../../style/utils";
+import { ICON_TOOLTIP_POSITIONS } from "./icon-config";
 
 const marginPropTypes = filterStyledSystemMarginProps(
   styledSystemPropTypes.space
@@ -107,8 +108,6 @@ const Icon = React.forwardRef(
   }
 );
 
-const placements = ["top", "bottom", "left", "right"];
-
 Icon.propTypes = {
   ...marginPropTypes,
   /**
@@ -152,7 +151,7 @@ Icon.propTypes = {
   /** The message string to be displayed in the tooltip */
   tooltipMessage: PropTypes.string,
   /** The position to display the tooltip */
-  tooltipPosition: PropTypes.oneOf(placements),
+  tooltipPosition: PropTypes.oneOf(["top", "bottom", "left", "right"]),
   /** Control whether the tooltip is visible */
   tooltipVisible: PropTypes.bool,
   /** Override background color of the Tooltip, provide any color from palette or any valid css color value. */
@@ -165,7 +164,7 @@ Icon.propTypes = {
     const isValid =
       prop &&
       Array.isArray(prop) &&
-      prop.every((placement) => placements.includes(placement));
+      prop.every((placement) => ICON_TOOLTIP_POSITIONS.includes(placement));
 
     if (!prop || isValid) {
       return null;
