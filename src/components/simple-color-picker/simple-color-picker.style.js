@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-import StyledValidationicon from "../../../components/validations/validation-icon.style";
-import baseTheme from "../../../style/themes/base";
+import StyledValidationicon from "../validations/validation-icon.style";
+import baseTheme from "../../style/themes/base";
 
 const BORDER_WIDTH = 2;
 const getRoundedMaxWidth = (maxWidth, childWidth) =>

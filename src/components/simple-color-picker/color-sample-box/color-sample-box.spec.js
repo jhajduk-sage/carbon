@@ -4,7 +4,7 @@ import TestRenderer from "react-test-renderer";
 
 import ColorSampleBox from ".";
 import StyledColorSampleBox from "./color-sample-box.style";
-import { assertStyleMatch } from "../../../../__spec_helper__/test-utils";
+import { assertStyleMatch } from "../../../__spec_helper__/test-utils";
 import StyledTickIcon from "../tick-icon/tick-icon.style";
 
 function render(props) {

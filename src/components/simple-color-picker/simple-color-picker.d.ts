@@ -1,6 +1,6 @@
 import * as React from "react";
 import { MarginProps } from "styled-system";
-import { ValidationPropTypes } from "../../../components/validations";
+import { ValidationPropTypes } from "../validations";
 import { SimpleColorProps } from "./simple-color/simple-color";
 
 type SimpleColorPickerChild = React.ReactElement<SimpleColorProps> | boolean | null | undefined;
