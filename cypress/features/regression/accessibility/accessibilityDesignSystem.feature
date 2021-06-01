@@ -17,11 +17,6 @@ Feature: Accessibility tests - Design System folder
     Then "Accordion default page" component has no accessibility violations
 
   @accessibility
-  Scenario: Design System Advanced Color Picker component default story page
-    When I open "Design System Advanced Color Picker" component page "default story" in no iframe
-    Then "Advanced Color Picker" component has no accessibility violations
-
-  @accessibility
   Scenario Outline: Design System <component> default story page
     When I open "Test <component>" component page "default" in no iframe
     Then "<component>" component has no accessibility violations
@@ -104,28 +99,27 @@ Feature: Accessibility tests - Design System folder
     When I open "Design System <component>" component page "default story" in no iframe
     Then "<component>" component has no accessibility violations
     Examples:
-      | component         |
-      | Badge             |
-      | Batch Selection   |
-      | Checkbox          |
-      | Content           |
-      | Date Input        |
-      | Date Range        |
-      | Draggable         |
-      | Fieldset          |
-      | Flat Table        |
-      | Hr                |
-      | Loader            |
-      | Pager             |
-      | Search            |
-      | Select            |
-      | Select Filterable |
-      | Switch            |
-      | Tabs              |
-      | Textarea          |
-      | Textbox           |
-      | Text Editor       |
-      | Tile Select       |
+      | component             |
+      | Advanced Color Picker |
+      | Badge                 |
+      | Batch Selection       |
+      | Content               |
+      | Draggable             |
+      | Fieldset              |
+      | Flat Table            |
+      | Hr                    |
+      | Image                 |
+      | Loader                |
+      | Pager                 |
+      | Simple color picker   |
+      | Search                |
+      | Select                |
+      | Select Filterable     |
+      | Tabs                  |
+      | Textarea              |
+      | Textbox               |
+      | Text Editor           |
+      | Tile Select           |
 
   @accessibility
   Scenario Outline: Design System Text Editor component <story> page
@@ -230,6 +224,7 @@ Feature: Accessibility tests - Design System folder
     Then "<component>" component has no accessibility violations
     Examples:
       | component           |
+      | simple-color-picker |
       | textarea            |
       | date-input          |
       | date-range          |
@@ -242,6 +237,7 @@ Feature: Accessibility tests - Design System folder
     Then "<component>" component has no accessibility violations
     Examples:
       | component           |
+      | simple-color-picker |
       | textarea            |
       | date-input          |
       | date-range          |
@@ -254,38 +250,9 @@ Feature: Accessibility tests - Design System folder
     Then "<component>" component has no accessibility violations
     Examples:
       | component           |
+      | simple-color-picker |
       | textarea            |
       | date-input          |
       | date-range          |
       | textbox             |
-      | fieldset            | 
-
-  @accessibility    
-  Scenario: Image component default story
-    When I open "Design System Image" component page "default story" in no iframe
-    Then "Image default story" component has no accessibility violations
-
-  @accessibility
-  Scenario Outline: Design System checkbox component <story> story
-    When I open "Design System checkbox validations" component page "<story>" in no iframe
-    Then "Design System checkbox <story> story" component has no accessibility violations
-    Examples:
-      | story                              |
-      | group checkbox boolean validation  |
-      | group checkbox string validation   |
-      | single checkbox boolean validation |
-      | single checkbox string validation  |
-
-  @accessibility
-  Scenario: Design System checkbox with asterisk
-    When I open "Design System checkbox validations" component page "required" in no iframe
-    Then "Design System checkbox with asterisk" component has no accessibility violations
-    
-  Scenario Outline: Design System switch component <story> story
-    When I open "Design System switch" component page "<story>" in no iframe
-    Then "Design System switch <story> story" component has no accessibility violations
-    Examples:
-      | story                                               |
-      | single switch boolean validation                    |
-      | single switch string validation                     |
-      | single switch string validation validation on label |
+      | fieldset            |
