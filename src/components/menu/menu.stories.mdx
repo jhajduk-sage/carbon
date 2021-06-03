@@ -682,6 +682,34 @@ Note that only one `ScrollableBlock` can be used within a single submenu.
   </Story>
 </Preview>
 
+### Submenu with search -- TEST!!!!
+
+<Preview>
+  <Story
+    name="submenu with search -- TEST!!!!"
+    parameters={{ chromatic: { disable: true } }}
+  >
+      <div style={{ minHeight: 300 }}>
+      <Menu menuType="dark">
+        <MenuItem submenu="Menu Item Three">
+          <MenuItem href="#">Item Submenu One</MenuItem>
+          <MenuDivider variant="alternate" size="large" />
+          <MenuSegmentTitle variant="alternate">segment title</MenuSegmentTitle>
+          <MenuItem variant="alternate">
+            <Search placeholder="Dark variant" variant="dark" defaultValue="" />
+          </MenuItem>
+          <MenuItem variant="alternate" href="#">
+            Item Submenu Two
+          </MenuItem>
+          <MenuItem variant="alternate" href="#">
+            Item Submenu Three
+          </MenuItem>
+        </MenuItem>
+      </Menu>
+    </div>
+  </Story>
+</Preview>
+
 ## Props
 
 ### Menu

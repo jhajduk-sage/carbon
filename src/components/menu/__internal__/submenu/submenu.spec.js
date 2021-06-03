@@ -378,7 +378,7 @@ describe("Submenu component", () => {
     });
   });
 
-  describe("keybord navigation", () => {
+  describe("keyboard navigation", () => {
     describe("when closed", () => {
       let submenuItem;
 
@@ -1037,7 +1037,6 @@ describe("Submenu component", () => {
           <MenuContext.Provider value={menuContextValues(menuType)}>
             <Submenu title="title" tabIndex={-1} {...props}>
               <MenuItem>Apple</MenuItem>
-              <MenuItem>Banana</MenuItem>
               <MenuItem variant="alternate">
                 <Search
                   defaultValue=""
@@ -1046,6 +1045,7 @@ describe("Submenu component", () => {
                   onChange={() => {}}
                 />
               </MenuItem>
+              <MenuItem>Banana</MenuItem>
             </Submenu>
           </MenuContext.Provider>
         </ThemeProvider>,
@@ -1098,6 +1098,23 @@ describe("Submenu component", () => {
           `,
         }
       );
+    });
+
+    it("should be focusable by using down arrow key", () => {
+      wrapper = renderWithSearch("dark");
+      openSubmenu(wrapper);
+      const searchInput = wrapper.find(StyledSearch).find("input");
+
+      act(() => {
+        wrapper
+          .find(StyledMenuItemWrapper)
+          .at(0)
+          .props()
+          .onKeyDown(events.arrowDown);
+      });
+      wrapper.update();
+
+      expect(searchInput).toBeFocused();
     });
   });
 });

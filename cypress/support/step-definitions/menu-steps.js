@@ -9,6 +9,7 @@ import {
   menuComponent,
   submenuItem,
 } from "../../locators/menu";
+import { SEARCH_COMPONENT, CROSS_ICON } from "../../locators/search/locators";
 import { positionOfElement, keyCode } from "../helper";
 
 When("I hover over third expandable Menu component", () => {
@@ -122,4 +123,20 @@ Then("Menu {string} expandable element has inner elements", (position) => {
   innerMenu(positionOfElement("third"))
     .should("have.attr", "data-component", "link")
     .and("be.visible");
+});
+
+// instructions for search in menu keyboard nav test
+When("I press {string} key {int} times", (key, times) => {
+  cy.focused().trigger("keydown", keyCode(key));
+  for (let i = 0; i < times; i++) {
+    cy.focused();
+  }
+});
+
+Then("Search component input should be focused", () => {
+  cy.get(SEARCH_COMPONENT).find("input").should("have.focus");
+});
+
+Then("Search component input icon should be focused", () => {
+  cy.get(CROSS_ICON).find("input").should("have.focus");
 });

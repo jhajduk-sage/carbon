@@ -37,12 +37,13 @@ const Submenu = React.forwardRef(
     },
     ref
   ) => {
+    const [blockFocus, setBlockFocus] = useState(false);
     const menuContext = useContext(MenuContext);
     const [submenuOpen, setSubmenuOpen] = useState(false);
     const [submenuFocusIndex, setSubmenuFocusIndex] = useState(undefined);
     const [characterString, setCharacterString] = useState("");
     const submenuRef = useRef();
-
+    console.log(submenuFocusIndex);
     const formattedChildren = React.Children.map(children, (child) => {
       if (child.type === ScrollableBlock) {
         return [...child.props.children];
@@ -98,13 +99,13 @@ const Submenu = React.forwardRef(
 
         if (submenuOpen) {
           let nextIndex = index;
-
           if (Events.isTabKey(event) && !Events.isShiftKey(event)) {
             if (index === numberOfChildren - 1) {
               closeSubmenu();
               return;
             }
             nextIndex = index + 1;
+            setBlockFocus(true);
           }
 
           if (Events.isTabKey(event) && Events.isShiftKey(event)) {
@@ -113,6 +114,7 @@ const Submenu = React.forwardRef(
               return;
             }
             nextIndex = index - 1;
+            setBlockFocus(true);
           }
 
           if (Events.isDownKey(event)) {
@@ -120,6 +122,7 @@ const Submenu = React.forwardRef(
             if (index < numberOfChildren - 1) {
               nextIndex = index + 1;
             }
+            setBlockFocus(false);
           }
 
           if (Events.isUpKey(event)) {
@@ -127,6 +130,7 @@ const Submenu = React.forwardRef(
             if (index > 0) {
               nextIndex = index - 1;
             }
+            setBlockFocus(false);
           }
 
           if (Events.isEscKey(event)) {
@@ -187,7 +191,8 @@ const Submenu = React.forwardRef(
           const nextChild = React.Children.toArray(formattedChildren)[
             nextIndex
           ];
-          if (nextChild && nextChild.type === MenuItem) {
+
+          if (nextChild?.type === MenuItem) {
             setSubmenuFocusIndex(nextIndex);
           } else {
             handleKeyDown(event, nextIndex);
@@ -289,6 +294,11 @@ const Submenu = React.forwardRef(
                   blockIndex: React.Children.toArray(children).findIndex(
                     (item) => item.type === ScrollableBlock
                   ),
+                  updateFocusIndex: (i) => setSubmenuFocusIndex(i),
+                  updateSubmenuOpen: (isOpen) => setSubmenuOpen(isOpen),
+                  isFirst: index === 0,
+                  isLast: index === numberOfChildren - 1,
+                  blockFocus,
                 }}
               >
                 {child}

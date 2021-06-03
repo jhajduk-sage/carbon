@@ -30,6 +30,7 @@ const MenuItem = ({
   icon,
   selected,
   onKeyDown,
+  onFocus,
   variant = "default",
   showDropdownArrow = true,
   ariaLabel,
@@ -41,7 +42,8 @@ const MenuItem = ({
   const ref = useRef(null);
   const focusFromMenu = menuContext.isFocused;
   const focusFromSubmenu = submenuContext.isFocused;
-  const isChildrenSearch = children?.type === Search;
+  const isChildSearch = useRef(false);
+  const childRef = useRef();
   const childrenItems = React.Children.map(children, (child) => {
     if (child && child.type === SubmenuBlock) {
       const childArray = Array.isArray(child.props.children)
@@ -50,17 +52,21 @@ const MenuItem = ({
 
       return [...childArray.map((innerChild) => innerChild)];
     }
+    if (child?.type === Search) {
+      isChildSearch.current = true;
+    }
 
     return child;
   });
 
+  const focusRef = isChildSearch.current ? childRef : ref;
   useEffect(() => {
     if (focusFromSubmenu === undefined && focusFromMenu) {
-      ref.current.focus();
-    } else if (focusFromSubmenu) {
-      ref.current.focus();
+      focusRef.current.focus();
+    } else if (!submenuContext.blockFocus && focusFromSubmenu) {
+      focusRef.current.focus();
     }
-  }, [focusFromMenu, focusFromSubmenu]);
+  }, [focusFromMenu, focusFromSubmenu, focusRef, submenuContext.blockFocus]);
 
   const handleKeyDown = useCallback(
     (event) => {
@@ -72,14 +78,34 @@ const MenuItem = ({
         ref.current.focus();
       }
 
-      if (submenuContext.handleKeyDown !== undefined) {
+      if (Events.isTabKey(event)) {
+        if (
+          !(
+            isChildSearch.current &&
+            document.activeElement === focusRef.current &&
+            focusRef.current?.value
+          )
+        ) {
+          submenuContext.handleKeyDown(event);
+        }
+      } else if (submenuContext.handleKeyDown !== undefined) {
         submenuContext.handleKeyDown(event);
       } else {
         menuContext.handleKeyDown(event);
       }
     },
-    [menuContext, onKeyDown, ref, submenuContext]
+    [focusRef, menuContext, onKeyDown, submenuContext]
   );
+
+  // const onClickSearch = useCallback(
+  //   (event) => {
+  //     if (!Events.composedPath(event).includes(isChildSearch.current)) {
+  //       document.addEventListener("click", onClickSearch);
+
+  //     }
+  //   },
+  //   []
+  // );
 
   const classes = useMemo(
     () =>
@@ -100,6 +126,11 @@ const MenuItem = ({
     onKeyDown: handleKeyDown,
     ref,
   };
+  const clonedChildren = isChildSearch.current
+    ? childrenItems.map((child) =>
+        React.cloneElement(child, { inputRef: childRef })
+      )
+    : children;
 
   if (submenu) {
     return (
@@ -132,15 +163,15 @@ const MenuItem = ({
       {...rest}
     >
       <StyledMenuItemWrapper
-        as={isChildrenSearch ? "div" : Link}
+        as={isChildSearch.current ? "div" : Link}
         data-component="menu-item"
-        isSearch={isChildrenSearch}
+        isSearch={isChildSearch.current}
         menuType={menuContext.menuType}
         {...elementProps}
         role="menuitem"
         ariaLabel={ariaLabel}
       >
-        {children}
+        {clonedChildren}
       </StyledMenuItemWrapper>
     </StyledMenuItem>
   );
