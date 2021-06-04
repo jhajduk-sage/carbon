@@ -9,7 +9,6 @@ const HiddenCheckableInput = ({
   name,
   inputType,
   inputValue,
-  role,
   tabindex,
   ...props
 }) => {
@@ -51,7 +50,7 @@ const HiddenCheckableInput = ({
       aria-labelledby={labelId}
       aria-describedby={helpId}
       name={name}
-      role={role || inputType}
+      role={inputType}
       tabIndex={tabindex}
       type={inputType}
       value={inputValue}
@@ -73,7 +72,6 @@ HiddenCheckableInput.propTypes = {
   onFocus: PropTypes.func,
   inputType: PropTypes.string.isRequired,
   inputValue: PropTypes.string,
-  role: PropTypes.string,
   tabindex: PropTypes.number,
 };
 
