@@ -29,18 +29,16 @@ describe("InputPresentation", () => {
   });
 
   describe("style", () => {
-    describe("sizes", () => {
-      ["small", "medium", "large"].forEach((size) => {
-        it(`has the right style for ${size}-sized inputs`, () => {
-          assertStyleMatch(
-            {
-              minHeight: sizes[size].height,
-              paddingLeft: sizes[size].horizontalPadding,
-              paddingRight: sizes[size].horizontalPadding,
-            },
-            render({ size }).find(InputPresentationStyle)
-          );
-        });
+    describe.each(["small", "medium", "large"])("when %s provided", (size) => {
+      it(`has the right style for ${size}-sized inputs`, () => {
+        assertStyleMatch(
+          {
+            minHeight: sizes[size].height,
+            paddingLeft: sizes[size].horizontalPadding,
+            paddingRight: sizes[size].horizontalPadding,
+          },
+          render({ size }).find(InputPresentationStyle)
+        );
       });
     });
 

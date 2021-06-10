@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { StyledButtonToggleIcon } from "./button-toggle.style";
 import Icon from "../icon";
-import { BUTTON_TOGGLE_ICON_SIZES } from "./button-toggle.config";
 
 const ButtonToggleIcon = (props) => (
   <StyledButtonToggleIcon {...props}>
@@ -23,7 +22,7 @@ ButtonToggleIcon.propTypes = {
    */
   buttonIcon: PropTypes.string,
   /** Sets the size of the buttonIcon (eg. large) */
-  buttonIconSize: PropTypes.oneOf(BUTTON_TOGGLE_ICON_SIZES),
+  buttonIconSize: PropTypes.oneOf(["small", "large"]),
 };
 
 export default ButtonToggleIcon;

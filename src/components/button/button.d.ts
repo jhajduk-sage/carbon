@@ -1,8 +1,15 @@
 import * as React from "react";
 import { IconTypes } from "components/icon/icon-types";
 import { SpaceProps } from "styled-system";
-import { ButtonTypes } from "./button.type";
 
+export type ButtonTypes =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "dashed"
+  | "destructive"
+  | "darkBackground";
+  
 export interface ButtonBaseProps extends SpaceProps {
   /** Prop to specify the aria-label text.
    *  Only to be used in Button when only an icon is rendered.
