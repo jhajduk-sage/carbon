@@ -13,9 +13,9 @@ import Fieldset from "../../__internal__/fieldset";
 import SimpleColor from "./simple-color";
 import RadioButtonMapper from "../../__experimental__/components/radio-button/radio-button-mapper.component";
 import { StyledContent, StyledColorOptions } from "./simple-color-picker.style";
-import ValidationIcon from "../validations/validation-icon.component";
 import { InputGroupContext } from "../../__internal__/input-behaviour";
 import { filterStyledSystemMarginProps } from "../../style/utils";
+import ValidationIcon from "../../__internal__/validations/validation-icon.component";
 
 const marginPropTypes = filterStyledSystemMarginProps(
   styledSystemPropTypes.space
