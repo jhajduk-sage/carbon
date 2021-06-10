@@ -25,7 +25,7 @@ export interface AccordionProps extends SpaceProps {
   /** Sets icon alignment - accepted values: 'left', 'right' (default) */
   iconAlign?: "left" | "right";
   /** Sets accordion title */
-  title: string;
+  title: React.ReactNode;
   /** An info message to be displayed in the tooltip */
   info?: string;
   /** Callback fired when expansion state changes, onChange(event: object, isExpanded: boolean) */
@@ -47,6 +47,8 @@ export interface AccordionProps extends SpaceProps {
   width?: string;
 }
 
-declare function Accordion(props: AccordionProps & React.RefAttributes<HTMLDivElement>): JSX.Element;
+declare function Accordion(
+  props: AccordionProps & React.RefAttributes<HTMLDivElement>
+): JSX.Element;
 
 export default Accordion;

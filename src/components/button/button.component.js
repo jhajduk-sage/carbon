@@ -200,11 +200,11 @@ Button.propTypes = {
   onBlur: PropTypes.func,
   /** Specify a callback triggered on change */
   onChange: PropTypes.func,
-  /** pecify a callback triggered on click */
+  /** Specify a callback triggered on click */
   onClick: PropTypes.func,
   /** Specify a callback triggered on focus */
   onFocus: PropTypes.func,
-  /** pecify a callback triggered on keuyDown */
+  /** Specify a callback triggered on keyDown */
   onKeyDown: PropTypes.func,
   /** Provides a tooltip message when the icon is hovered. */
   iconTooltipMessage: PropTypes.string,

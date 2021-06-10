@@ -68,6 +68,7 @@ const NumeralDate = ({
   fieldHelp,
   adaptiveLabelBreakpoint,
   required,
+  size,
   enableInternalError,
   enableInternalWarning,
   ...rest
@@ -224,6 +225,7 @@ const NumeralDate = ({
                       warning: internalWarning,
                       info,
                     })}
+                  size={size}
                 />
               </StyledDateField>
             );
@@ -311,6 +313,8 @@ NumeralDate.propTypes = {
   adaptiveLabelBreakpoint: PropTypes.number,
   /** Flag to configure component as mandatory */
   required: PropTypes.bool,
+  /** Size of an input */
+  size: PropTypes.oneOf("small", "medium", "large"),
 };
 
 export default NumeralDate;

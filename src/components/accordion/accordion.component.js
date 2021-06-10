@@ -154,12 +154,16 @@ const Accordion = React.forwardRef(
                 data-element="accordion-headings-container"
                 hasValidationIcon={showValidationIcon}
               >
-                <StyledAccordionTitle
-                  data-element="accordion-title"
-                  size={size}
-                >
-                  {title}
-                </StyledAccordionTitle>
+                {typeof title === "string" ? (
+                  <StyledAccordionTitle
+                    data-element="accordion-title"
+                    size={size}
+                  >
+                    {title}
+                  </StyledAccordionTitle>
+                ) : (
+                  title
+                )}
 
                 {showValidationIcon && (
                   <ValidationIcon
@@ -225,8 +229,8 @@ Accordion.propTypes = {
   iconAlign: PropTypes.oneOf(["left", "right"]),
   /** Callback fired when expansion state changes, onChange(event: object, isExpanded: boolean) */
   onChange: PropTypes.func,
-  /** Sets accordion title */
-  title: PropTypes.string.isRequired,
+  /** Sets accordion title. Will render inside a h3 if set to a string */
+  title: PropTypes.node.isRequired,
   /** Sets accordion sub title */
   subTitle: PropTypes.string,
   /** Sets accordion size */

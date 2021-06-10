@@ -2,7 +2,7 @@ import React from "react";
 import { select, text, number } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import Accordion from "./accordion.component";
-import AccordionGroup from "./accordion-group.component";
+import AccordionGroup from "./accordion-group/accordion-group.component";
 import Textbox from "../../__experimental__/components/textbox";
 import Box from "../box";
 
