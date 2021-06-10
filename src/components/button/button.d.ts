@@ -9,7 +9,7 @@ export type ButtonTypes =
   | "dashed"
   | "destructive"
   | "darkBackground";
-  
+
 export interface ButtonBaseProps extends SpaceProps {
   /** Prop to specify the aria-label text.
    *  Only to be used in Button when only an icon is rendered.
