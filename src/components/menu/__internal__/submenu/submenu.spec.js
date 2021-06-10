@@ -917,7 +917,7 @@ describe("Submenu component", () => {
           act(() => {
             wrapper
               .find(StyledMenuItemWrapper)
-              .at(0)
+              .last()
               .props()
               .onKeyDown(events.shiftTab);
           });

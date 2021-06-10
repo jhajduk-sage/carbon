@@ -15,7 +15,6 @@ import Events from "../../../utils/helpers/events";
 import { MenuContext } from "../menu.component";
 import Submenu from "../__internal__/submenu/submenu.component";
 import SubmenuContext from "../__internal__/submenu/submenu.context";
-
 import SubmenuBlock from "../submenu-block/submenu-block.component";
 import { StyledMenuItem } from "../menu.style";
 import Search from "../../../__experimental__/components/search";
@@ -63,10 +62,23 @@ const MenuItem = ({
   useEffect(() => {
     if (focusFromSubmenu === undefined && focusFromMenu) {
       focusRef.current.focus();
-    } else if (!submenuContext.blockFocus && focusFromSubmenu) {
+    } else if (!submenuContext.blockDoubleFocus && focusFromSubmenu) {
       focusRef.current.focus();
     }
-  }, [focusFromMenu, focusFromSubmenu, focusRef, submenuContext.blockFocus]);
+  }, [
+    focusFromMenu,
+    focusFromSubmenu,
+    focusRef,
+    submenuContext.blockDoubleFocus,
+  ]);
+
+  // useEffect(() => {
+  //        if (document.activeElement === focusRef.current) {
+  //         submenuContext.updateFocusIndex(submenuContext.searchIndex);
+  //      }
+  //   },
+  //   [focusRef, onClick, submenuContext]
+  // );
 
   const handleKeyDown = useCallback(
     (event) => {
@@ -78,7 +90,7 @@ const MenuItem = ({
         ref.current.focus();
       }
 
-      if (Events.isTabKey(event)) {
+      if (submenuContext.handleKeyDown !== undefined) {
         if (
           !(
             isChildSearch.current &&
@@ -88,24 +100,12 @@ const MenuItem = ({
         ) {
           submenuContext.handleKeyDown(event);
         }
-      } else if (submenuContext.handleKeyDown !== undefined) {
-        submenuContext.handleKeyDown(event);
       } else {
         menuContext.handleKeyDown(event);
       }
     },
     [focusRef, menuContext, onKeyDown, submenuContext]
   );
-
-  // const onClickSearch = useCallback(
-  //   (event) => {
-  //     if (!Events.composedPath(event).includes(isChildSearch.current)) {
-  //       document.addEventListener("click", onClickSearch);
-
-  //     }
-  //   },
-  //   []
-  // );
 
   const classes = useMemo(
     () =>
@@ -126,6 +126,7 @@ const MenuItem = ({
     onKeyDown: handleKeyDown,
     ref,
   };
+
   const clonedChildren = isChildSearch.current
     ? childrenItems.map((child) =>
         React.cloneElement(child, { inputRef: childRef })

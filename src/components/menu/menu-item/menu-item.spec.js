@@ -314,6 +314,22 @@ describe("MenuItem", () => {
       });
     });
 
+    // describe("when menuItem is clicked", () => {
+    //   it("should focus the current menu item and update Submenus FocusIndex", () => {
+    //     wrapper = renderSubmenuContext(true);
+
+    //     act(() => {
+    //       wrapper.find(StyledMenuItemWrapper).at(0).props().simulate("click");
+    //     });
+
+    //     wrapper.update();
+    //     const menuItem = wrapper.find(MenuItem).find("a");
+
+    //     expect(menuItem).toBeFocused();
+    //     expect(SubmenuContext.focusIndex).toEqual(0)
+    //   });
+    // });
+
     describe("when submenuContext.handleKeyDown exists", () => {
       it("should call submenuContext.handleKeyDown", () => {
         wrapper = renderSubmenuContext(false);

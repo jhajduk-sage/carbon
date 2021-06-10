@@ -19,6 +19,7 @@ import MenuItem from "../../menu-item";
 import { characterNavigation } from "../keyboard-navigation";
 import ScrollableBlock from "../../scrollable-block";
 import SubmenuContext from "./submenu.context";
+import Search from "../../../../__experimental__/components/search";
 
 const Submenu = React.forwardRef(
   (
@@ -37,13 +38,13 @@ const Submenu = React.forwardRef(
     },
     ref
   ) => {
-    const [blockFocus, setBlockFocus] = useState(false);
+    const [blockDoubleFocus, setBlockDoubleFocus] = useState(false);
     const menuContext = useContext(MenuContext);
     const [submenuOpen, setSubmenuOpen] = useState(false);
     const [submenuFocusIndex, setSubmenuFocusIndex] = useState(undefined);
     const [characterString, setCharacterString] = useState("");
     const submenuRef = useRef();
-    console.log(submenuFocusIndex);
+    // console.log("submenuFocusIndex: ", submenuFocusIndex);
     const formattedChildren = React.Children.map(children, (child) => {
       if (child.type === ScrollableBlock) {
         return [...child.props.children];
@@ -51,6 +52,9 @@ const Submenu = React.forwardRef(
 
       return child;
     });
+    //  console.log(formattedChildren);
+
+    const arrayOfFormattedChildren = React.Children.toArray(formattedChildren);
 
     const numberOfChildren = useMemo(
       () => React.Children.count(formattedChildren),
@@ -73,6 +77,7 @@ const Submenu = React.forwardRef(
     const closeSubmenu = useCallback(() => {
       setSubmenuOpen(false);
       setSubmenuFocusIndex(undefined);
+      setBlockDoubleFocus(false);
       setCharacterString("");
     }, []);
 
@@ -105,7 +110,7 @@ const Submenu = React.forwardRef(
               return;
             }
             nextIndex = index + 1;
-            setBlockFocus(true);
+            setBlockDoubleFocus(true);
           }
 
           if (Events.isTabKey(event) && Events.isShiftKey(event)) {
@@ -114,7 +119,7 @@ const Submenu = React.forwardRef(
               return;
             }
             nextIndex = index - 1;
-            setBlockFocus(true);
+            setBlockDoubleFocus(true);
           }
 
           if (Events.isDownKey(event)) {
@@ -122,7 +127,7 @@ const Submenu = React.forwardRef(
             if (index < numberOfChildren - 1) {
               nextIndex = index + 1;
             }
-            setBlockFocus(false);
+            setBlockDoubleFocus(false);
           }
 
           if (Events.isUpKey(event)) {
@@ -130,7 +135,7 @@ const Submenu = React.forwardRef(
             if (index > 0) {
               nextIndex = index - 1;
             }
-            setBlockFocus(false);
+            setBlockDoubleFocus(false);
           }
 
           if (Events.isEscKey(event)) {
@@ -188,9 +193,7 @@ const Submenu = React.forwardRef(
 
           // Check that next index contains a MenuItem
           // If not, call handleKeyDown again
-          const nextChild = React.Children.toArray(formattedChildren)[
-            nextIndex
-          ];
+          const nextChild = arrayOfFormattedChildren[nextIndex];
 
           if (nextChild?.type === MenuItem) {
             setSubmenuFocusIndex(nextIndex);
@@ -200,19 +203,17 @@ const Submenu = React.forwardRef(
         }
       },
       [
-        characterString,
-        characterTimer,
-        startCharacterTimeout,
-        restartCharacterTimeout,
-        formattedChildren,
-        closeSubmenu,
+        submenuFocusIndex,
+        submenuOpen,
         href,
         menuContext,
+        arrayOfFormattedChildren,
         numberOfChildren,
+        closeSubmenu,
         onKeyDown,
-        submenuFocusIndex,
-        setSubmenuFocusIndex,
-        submenuOpen,
+        characterString,
+        restartCharacterTimeout,
+        startCharacterTimeout,
       ]
     );
 
@@ -294,11 +295,15 @@ const Submenu = React.forwardRef(
                   blockIndex: React.Children.toArray(children).findIndex(
                     (item) => item.type === ScrollableBlock
                   ),
-                  updateFocusIndex: (i) => setSubmenuFocusIndex(i),
+                  updateFocusIndex: (focusIndex) =>
+                    setSubmenuFocusIndex(focusIndex),
                   updateSubmenuOpen: (isOpen) => setSubmenuOpen(isOpen),
                   isFirst: index === 0,
                   isLast: index === numberOfChildren - 1,
-                  blockFocus,
+                  blockDoubleFocus,
+                  searchIndex: arrayOfFormattedChildren.findIndex(
+                    (menuItem) => menuItem?.props.children?.type === Search
+                  ),
                 }}
               >
                 {child}
