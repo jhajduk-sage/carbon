@@ -13,7 +13,7 @@ const stickyColumnFocusStyling = (index, theme) => {
       index === 0 ? theme.colors.focus : theme.table.secondary
     };
     background-clip: padding-box;
-    z-index: ${theme.zIndex.overlay};
+    z-index: ${theme.zIndex.popover};
 
     :before {
       content: "";
@@ -54,6 +54,7 @@ const StyledFlatTableRow = styled.tr`
   min-width: 100%;
   table-layout: fixed;
   width: auto;
+  outline: 2px solid #0000;
 
   ${({ stickyOffset }) =>
     stickyOffset > 0 &&

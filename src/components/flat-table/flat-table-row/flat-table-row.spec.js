@@ -97,7 +97,7 @@ describe("FlatTableRow", () => {
           borderBottom: "1px solid transparent",
           borderLeft: `1px solid ${baseTheme.colors.focus}`,
           backgroundClip: "padding-box",
-          zIndex: "1000",
+          zIndex: "2000",
         },
         wrapper,
         { modifier: `:focus ${StyledFlatTableRowHeader}` }
