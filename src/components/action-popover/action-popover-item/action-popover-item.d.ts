@@ -1,6 +1,6 @@
 import { IconTypes } from "components/icon/icon-types";
 import * as React from "react";
-import { ActionPopoverMenuProps } from "./action-popover-menu";
+import { ActionPopoverMenuProps } from "../action-popover-menu/action-popover-menu";
 
 export interface ActionPopoverItemProps {
   /** The text label to display for this Item */

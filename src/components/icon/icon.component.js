@@ -6,6 +6,9 @@ import StyledIcon from "./icon.style";
 import Tooltip from "../tooltip";
 import { filterStyledSystemMarginProps } from "../../style/utils";
 import { ICON_TOOLTIP_POSITIONS } from "./icon-config";
+import Logger from "../../utils/logger";
+
+let deprecatedWarnTriggered = false;
 
 const marginPropTypes = filterStyledSystemMarginProps(
   styledSystemPropTypes.space
@@ -37,7 +40,14 @@ const Icon = React.forwardRef(
     },
     ref
   ) => {
+    if (!deprecatedWarnTriggered && (iconColor || bgTheme)) {
+      deprecatedWarnTriggered = true;
+      Logger.deprecate(
+        "`iconColor` and `bgTheme` props are deprecated and will soon be removed"
+      );
+    }
     const isInteractive = !!tooltipMessage && !disabled;
+
     /** Return Icon type with overrides */
     const iconType = () => {
       // switch tweaks icon names for actual icons in the set
