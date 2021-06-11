@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
-import TestRenderer from "react-test-renderer";
 import "jest-styled-components";
+import OptionsHelper from "../../utils/helpers/options-helper";
 import { assertStyleMatch } from "../../__spec_helper__/test-utils";
 import Confirm from "./confirm.component";
 import { StyledConfirmButtons, StyledConfirmHeading } from "./confirm.style";
@@ -68,27 +68,6 @@ describe("Confirm", () => {
         expect(button.type()).toEqual("button");
         button.simulate("click");
         expect(onConfirm).toHaveBeenCalled();
-      });
-    });
-
-    describe("yes button destructive", () => {
-      it("check confirmButton is destructive", () => {
-        wrapper = mount(
-          <Confirm
-            open
-            onCancel={onCancel}
-            onConfirm={onConfirm}
-            confirmLabel="Delete"
-            cancelLabel="Cancel"
-            destructive
-          />
-        );
-
-        const button = wrapper
-          .find(Button)
-          .find('[data-element="confirm"]')
-          .at(0);
-        expect(button.props().destructive).toBeTruthy();
       });
     });
 
@@ -244,12 +223,12 @@ describe("Confirm", () => {
 
   describe("Validation styling", () => {
     it("confirm buttons should match snapshot", () => {
-      wrapper = TestRenderer.create(<StyledConfirmButtons theme={mintTheme} />);
+      wrapper = mount(<StyledConfirmButtons theme={mintTheme} />);
       assertStyleMatch(
         {
           marginTop: "48px",
         },
-        wrapper.toJSON()
+        wrapper
       );
     });
 
@@ -306,5 +285,183 @@ describe("Confirm", () => {
         { modifier: `${StyledIcon}` }
       );
     });
+
+    it("confrim and cancel buttons should be `destructive`", () => {
+      wrapper = mount(
+        <Confirm
+          open
+          onCancel={onCancel}
+          onConfirm={onConfirm}
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          destructive
+        />
+      );
+
+      const confirmButton = wrapper
+        .find(Button)
+        .find('[data-element="confirm"]')
+        .at(0);
+      const cancelButton = wrapper
+        .find(Button)
+        .find('[data-element="cancel"]')
+        .at(0);
+
+      expect(confirmButton.props().destructive).toBeTruthy();
+      expect(cancelButton.props().destructive).toBeTruthy();
+    });
+
+    it("confrim button should be `destructive`", () => {
+      wrapper = mount(
+        <Confirm
+          open
+          onCancel={onCancel}
+          onConfirm={onConfirm}
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          confirmButtonDestructive
+        />
+      );
+
+      const confirmButton = wrapper
+        .find(Button)
+        .find('[data-element="confirm"]')
+        .at(0);
+
+      expect(confirmButton.props().destructive).toBeTruthy();
+    });
+
+    it("cancel button should be `destructive`", () => {
+      wrapper = mount(
+        <Confirm
+          open
+          onCancel={onCancel}
+          onConfirm={onConfirm}
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          cancelButtonDestructive
+        />
+      );
+
+      const cancelButton = wrapper
+        .find(Button)
+        .find('[data-element="cancel"]')
+        .at(0);
+
+      expect(cancelButton.props().destructive).toBeTruthy();
+    });
+
+    it.each(OptionsHelper.buttonTypes)(
+      "cancel button type should be `%s`",
+      (buttonType) => {
+        wrapper = mount(
+          <Confirm
+            cancelButtonType={buttonType}
+            onCancel={() => {}}
+            onConfirm={() => {}}
+            open
+          />
+        );
+        const button = wrapper
+          .find(Button)
+          .find('[data-element="cancel"]')
+          .at(0);
+
+        expect(button.props().buttonType).toBe(buttonType);
+      }
+    );
+
+    it.each(OptionsHelper.buttonTypes)(
+      "confirm button type should be `%s`",
+      (buttonType) => {
+        wrapper = mount(
+          <Confirm
+            confirmButtonType={buttonType}
+            onCancel={() => {}}
+            onConfirm={() => {}}
+            open
+          />
+        );
+        const button = wrapper
+          .find(Button)
+          .find('[data-element="confirm"]')
+          .at(0);
+
+        expect(button.props().buttonType).toBe(buttonType);
+      }
+    );
+
+    it("confirm button icon type should be passed to the button", () => {
+      wrapper = mount(
+        <Confirm
+          confirmButtonIconType="bin"
+          onCancel={() => {}}
+          onConfirm={() => {}}
+          open
+        />
+      );
+      const button = wrapper
+        .find(Button)
+        .find('[data-element="confirm"]')
+        .at(0);
+
+      expect(button.props().iconType).toBe("bin");
+    });
+
+    it("cancel button icon type should be passed to the button", () => {
+      wrapper = mount(
+        <Confirm
+          cancelButtonIconType="bin"
+          onCancel={() => {}}
+          onConfirm={() => {}}
+          open
+        />
+      );
+      const button = wrapper.find(Button).find('[data-element="cancel"]').at(0);
+
+      expect(button.props().iconType).toBe("bin");
+    });
+
+    it.each(OptionsHelper.buttonIconPositions)(
+      "cancel button icon position should be `%s`",
+      (position) => {
+        wrapper = mount(
+          <Confirm
+            cancelButtonIconPosition={position}
+            cancelButtonIconType="bin"
+            onCancel={() => {}}
+            onConfirm={() => {}}
+            open
+          />
+        );
+        const button = wrapper
+          .find(Button)
+          .find('[data-element="cancel"]')
+          .at(0);
+
+        expect(button.props().iconPosition).toBe(position);
+      }
+    );
+
+    it.each(OptionsHelper.buttonIconPositions)(
+      "confirm button icon position should be `%s`",
+      (position) => {
+        wrapper = mount(
+          <Confirm
+            confirmButtonIconPosition={position}
+            confirmButtonIconType="bin"
+            onCancel={() => {}}
+            onConfirm={() => {}}
+            open
+          />
+        );
+        const button = wrapper
+          .find(Button)
+          .find('[data-element="confirm"]')
+          .at(0);
+
+        expect(button.props().iconPosition).toBe(position);
+      }
+    );
   });
 });
