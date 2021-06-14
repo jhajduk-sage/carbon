@@ -1311,4 +1311,28 @@ describe("ActionPopover", () => {
       );
     });
   });
+
+  describe("when the horizontalAlignment prop is set to right", () => {
+    beforeEach(() => {
+      wrapper = enzymeMount(
+        <ThemeProvider theme={mintTheme}>
+          <ActionPopover horizontalAlignment="right">
+            <ActionPopoverItem key="1" href="#" download>
+              test download
+            </ActionPopoverItem>
+          </ActionPopover>
+        </ThemeProvider>
+      );
+    });
+
+    it("then menu item content should be right aligned", () => {
+      openMenu();
+      assertStyleMatch(
+        {
+          justifyContent: "flex-end",
+        },
+        wrapper.find(ActionPopoverItem)
+      );
+    });
+  });
 });

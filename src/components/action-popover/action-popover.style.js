@@ -37,7 +37,8 @@ const MenuItemFactory = (button) => styled(button)`
     disabled ? theme.menu.itemColorDisabled : theme.menu.itemColor};
   font-size: 14px;
   font-weight: 700;
-  text-align: left;
+  justify-content: ${({ horizontalAlignment }) =>
+    horizontalAlignment === "left" ? "flex-start" : "flex-end"};
   &:focus,
   &:hover {
     ${({ disabled }) =>
